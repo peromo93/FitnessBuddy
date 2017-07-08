@@ -21,13 +21,13 @@ class NutrientSerializer(serializers.Serializer):
 
 
 class FoodSerializer(serializers.Serializer):
-    ndbno = serializers.IntegerField()         # NDB food number
+    ndbno = serializers.CharField()            # NDB food number
     name = serializers.CharField()             # food name
     nutrients = NutrientSerializer(many=True)  # food nutrients
 
 
 class FoodSearchResultSerializer(serializers.Serializer):
-    ndbno = serializers.IntegerField()         # NDB food number
+    ndbno = serializers.CharField()            # NDB food number
     name = serializers.CharField()             # food name
 
 
