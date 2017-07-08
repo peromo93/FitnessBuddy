@@ -108,3 +108,4 @@ bin/
 local/
 lib/
 include/
+pip-selfcheck.json
