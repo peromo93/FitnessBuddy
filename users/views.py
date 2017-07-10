@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from FitnessBuddy.helper import get_profile_from_url
 from users.models import Profile
 from users.serializers import UserSerializer, ProfileSerializer
 from users.permissions import IsOwner, IsOwnerOrReadOnlyIfPublic, IsNotAuthenticated
@@ -8,8 +9,6 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny
 from django.contrib.auth.models import User
 from django.contrib.auth import update_session_auth_hash
-from django.shortcuts import get_object_or_404
-from django.http import Http404
 
 
 # Create your views here.
@@ -50,7 +49,6 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         user = self.request.user
         self.check_object_permissions(self.request, user)
-
         return user
 
     def perform_update(self, serializer):
@@ -69,13 +67,6 @@ class ProfileDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
 
     def get_object(self):
-        obj = None
-        if self.kwargs.get('pk'):
-            obj = get_object_or_404(Profile, user__pk=self.kwargs.get('pk'))
-        elif self.request.user.is_authenticated:
-            obj = get_object_or_404(Profile, user=self.request.user)
-        else:
-            raise Http404
-
-        self.check_object_permissions(self.request, obj)
-        return obj
+        profile = get_profile_from_url(self.kwargs)
+        self.check_object_permissions(self.request, profile)
+        return profile

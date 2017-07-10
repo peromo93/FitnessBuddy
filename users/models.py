@@ -11,7 +11,7 @@ class Profile(models.Model):
     """
     User Profile model
     """
-    
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_public = models.BooleanField(default=False)
     goal_calories = models.IntegerField(default=2000)
@@ -20,8 +20,11 @@ class Profile(models.Model):
     goal_protein = models.FloatField(default=0.3)
 
 
-# Function to create Profile each time a User is created
 def create_profile(sender, **kwargs):
+    """
+    Create a profile for the new user
+    """
+
     new_user = kwargs['instance']
     if kwargs['created']:
         user_profile = Profile(user=new_user)
