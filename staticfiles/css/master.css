@@ -1,0 +1,127 @@
+ body {
+    overflow-x: hidden;
+    background-color: #f0f3f6;
+ }
+
+#sidebar {
+    z-index: 10000;
+    position: fixed;
+    left: 200px;
+    width: 0;
+    height: 100%;
+    margin-left: -200px;
+    overflow-y: auto;
+    background: #2c353e;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#sidebar.sidebar-toggled {
+    width: 200px;
+}
+
+#sidebar.sidebar-initial {
+    width: 0;
+}
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 10px;
+    line-height: 45px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav > .active {
+    background: #85ce36;
+}
+
+.sidebar-nav > .active a {
+    color: #fff;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+.sidebar-brand {
+    color: #999999;
+    background: none;
+}
+
+.dropdown-menu {
+    position: absolute !important;
+    right: 0 !important;
+    left: auto !important;
+}
+
+.dropdown-menu i {
+    color: #85ce36 !important;
+}
+
+.dropdown-menu a:hover {
+    text-decoration: none;
+    color: #85ce36 !important;
+}
+
+.overlay {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  background-color: #ccc;
+  opacity: 0.6;
+  z-index: 9999;
+}
+
+.form-inline {
+    padding-left: 50px;
+}
+
+@media(min-width:768px) {
+    #sidebar.sidebar-initial {
+        width: 200px;
+    }
+
+    #page-content {
+      padding-left: 200px;
+    }
+
+    .form-inline {
+        padding-left: 200px;
+    }
+}
+
+input.transparent-input {
+   background-color: rgba(0,0,0,0) !important;
+   border: none !important;
+   width: 150px !important;
+}
+
+i.icon-reorder {
+    color: #85ce36;
+}
