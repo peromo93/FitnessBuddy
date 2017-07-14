@@ -6,13 +6,18 @@
 <!-- Sidebar -->
 <div class="sidebar-initial" id="sidebar">
     <ul class="sidebar-nav">
-        <li><img class="pt-2 pb-2 pl-2" src="{% static 'logo.png' %}" height="56px"></li>
+        <li><a href="/"><img class="pt-2 pb-2 pl-2" src="{% static 'logo.png' %}" height="56px"></a></li>
+        {% if user.is_authenticated %}
         <li class="active"><a href="#"><i class="icon-large pr-2 icon-home"></i>Dashboard</a></li>
         <li><a href="#"><i class="icon-large pr-2 icon-calendar"></i>Calendar</a></li>
         <li><a href="#"><i class="icon-large pr-2 icon-food"></i>Food Log</a></li>
         <li><a href="#"><i class="icon-large pr-2 icon-pencil"></i>Weight Log</a></li>
         <li><a href="#"><i class="icon-large pr-2 icon-user"></i>My Profile</a></li>
-        <li><a href="#"><i class="icon-large pr-2 icon-search"></i>Food Search</a></li>
+        {% else %}
+        <li><a href="login"><i class="icon-large pr-2 icon-unlock"></i>Login</a></li>
+        <li><a href="register"><i class="icon-large pr-2 icon-user"></i>Register</a></li>
+        {% endif %}
+        <li><a href="search"><i class="icon-large pr-2 icon-search"></i>Food Search</a></li>
     </ul>
 </div>
 
@@ -25,21 +30,33 @@
     <!-- Inline search -->
     <ul class="nav navbar-nav mr-auto">
         <form class="form-inline hidden-xs-down">
-            <i class="icon icon-search text-muted mb-1"></i><input class="form-control transparent-input mr-2" type="text" placeholder="Food Search...">
+            <i class="icon icon-search text-muted mb-1"></i><input class="form-control transparent-input mr-2" type="text" placeholder="Quick Search...">
         </form>
     </ul>
 
     <!-- Right aligned items -->
     <ul class="nav navbar-nav">
+        {% if user.is_authenticated %}
         <li class="nav-item dropdown">
             <a class="nav-link text-muted dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
-                <strong>Hello, Guest!</strong>
+                <strong>Hello, {{ user }}!</strong>
             </a>
             <div class="dropdown-menu animated flipInX">
                 <a class="pl-3 dropdown-item" href="#"><i class="pr-2 icon-cog"></i>Settings</a>
                 <a class="pl-3 dropdown-item" href="#"><i class="pr-2 icon-off"></i>Logout</a>
             </div>
         </li>
+        {% else %}
+        <li class="nav-item dropdown">
+            <a class="nav-link text-muted dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                <strong>Hello, Guest!</strong>
+            </a>
+            <div class="dropdown-menu animated flipInX">
+                <a class="pl-3 dropdown-item" href="login"><i class="pr-2 icon-unlock"></i>Login</a>
+                <a class="pl-3 dropdown-item" href="register"><i class="pr-2 icon-user"></i>Register</a>
+            </div>
+        </li>
+        {% endif %}
     </ul>
 
 </nav>

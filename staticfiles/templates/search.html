@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-block">
+                <h4 class="card-title">Food Search</h4><hr>
+                <form role="form" ng-submit="vm.search()">
+                    <div class="form-group">
+                        <label for="register__foodname">Food Name</label>
+                        <input type="text" class="form-control" id="register__username" ng-model="vm.username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register__datasource">Search Type</label><br>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-secondary btn-sm active">
+                                <input type="radio" name="options" id="option1" checked> Both
+                            </label>
+                            <label class="btn btn-secondary btn-sm">
+                                <input type="radio" name="options" id="option2" autocomplete="off"> Generic Foods
+                            </label>
+                            <label class="btn btn-secondary btn-sm">
+                                <input type="radio" name="options" id="option3" autocomplete="off"> Branded Foods
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
