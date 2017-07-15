@@ -13,11 +13,13 @@
         {% include 'stylesheets.html' %}
     </head>
     <body>
-        {% include 'navigation.html' %}
+        <div ng-controller="NavigationController">
+            {% include 'navigation.html' %}
+        </div>
 
         <!-- Page Content -->
         <div class="m-4" id="page-content">
-            <div class="container-fluid ng-view"></div>
+            <div ng-view class="container-fluid"></div>
         </div>
 
         {% include 'javascripts.html' %}

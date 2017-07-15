@@ -7,6 +7,7 @@
         ])
         .config(config);
 
+        /* Route configuration */
         config.$inject = ['$routeProvider', '$locationProvider'];
         function config($routeProvider, $locationProvider) {
 
@@ -26,7 +27,7 @@
 
             .when('/logout', {
                 controller: 'LogoutController',
-                template: '',
+                template: '', //AngularJS requires template to be set
             })
 
             .when('/register', {

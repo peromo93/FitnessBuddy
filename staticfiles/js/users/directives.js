@@ -5,7 +5,7 @@
         .module('fitnessbuddy.users.directives', [])
         .directive('pwMatch', pwMatch);
 
-
+    // direct that checks whether password1 === password2
     function pwMatch() {
         return {
             require: 'ngModel',
@@ -20,6 +20,5 @@
             },
         };
     }
-
 
 })();

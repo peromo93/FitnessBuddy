@@ -52,11 +52,11 @@
     background: rgba(255,255,255,0.2);
 }
 
-.sidebar-nav > .active {
+.sidebar-nav .active {
     background: #85ce36;
 }
 
-.sidebar-nav > .active a {
+.sidebar-nav .active a {
     color: #fff;
 }
 

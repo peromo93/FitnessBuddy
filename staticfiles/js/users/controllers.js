@@ -9,54 +9,60 @@
         .controller('LoginController', LoginController)
         .controller('LogoutController', LogoutController);
 
-    RegisterController.$inject = ['$location', '$scope', 'Users'];
-    function RegisterController($location, $scope, Users) {
+    /* Registration controller */
+    RegisterController.$inject = ['Users'];
+    function RegisterController(Users) {
         var vm = this;
 
+        // try to register the user
+        // on success, log user in
+        // on failure, display errors from response
         vm.register = function() {
             Users.register(vm.username, vm.password1)
-                .then(function(response, status, headers, config) { // success
-                    Users.login(vm.username, vm.password1);
-                }, function(response, status, headers, config) { // error
-                    vm.errors = response.data;
-                });
+                .then(
+                    function(response, status, headers, config) { // success
+                        Users.login(vm.username, vm.password1)
+                            .then(
+                                function(response, status, headers, config) { // success
+                                    vm.errors = Users.tokenAuthentication(response.data.token);
+                                },
+                                function(response, status, headers, config) { // error
+                                    vm.errors = response.data;
+                                }
+                            );
+                    },
+                    function(response, status, headers, config) { // error
+                        vm.errors = response.data;
+                    }
+                );
         };
     }
 
-    LoginController.$inject = ['$location', '$rootScope', 'Users', 'jwtHelper', 'authManager'];
-    function LoginController($location, $rootScope, Users, jwtHelper, authManager) {
+    /* Login controller */
+    LoginController.$inject = ['Users'];
+    function LoginController(Users) {
         var vm = this;
 
+        // try to log user in
+        // on success, redirect to dashboard
+        // on failure, display errors from the response
         vm.login = function() {
             Users.login(vm.username, vm.password)
-                .then(function(response, status, headers, config) { // success
-                    try {
-                        var token = jwtHelper.decodeToken(response.data.token);
-                        localStorage.setItem('token', response.data.token);
-                        localStorage.setItem('username', token.username);
-                        $rootScope.user = token.username;
-                        authManager.authenticate();
-                        $location.url('/');
+                .then(
+                    function(response, status, headers, config) { // success
+                        vm.errors = Users.tokenAuthentication(response.data.token);
+                    },
+                    function(response, status, headers, config) { // error
+                        vm.errors = response.data;
                     }
-                    catch (e) {
-                        localStorage.setItem('token', '');
-                        localStorage.setItem('username', '');
-                        $rootScope.user = 'Guest';
-                        vm.errors = {'token': [e]};
-                    }
-                }, function(response, status, headers, config) { // error
-                    vm.errors = response.data;
-                });
+                );
         };
     }
 
-    LogoutController.$inject = ['$location', '$rootScope', 'authManager'];
-    function LogoutController($location, $rootScope, authManager) {
-        authManager.unauthenticate();
-        localStorage.setItem('token', '');
-        localStorage.setItem('username', '');
-        $rootScope.user = 'Guest';
-        $location.url('/');
+    /* Logout controller */
+    LogoutController.$inject = ['Users'];
+    function LogoutController(Users) {
+        Users.logout();
     }
 
 })();
