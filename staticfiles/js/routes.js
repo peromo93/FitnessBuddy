@@ -8,7 +8,6 @@
         .config(config);
 
         config.$inject = ['$routeProvider', '$locationProvider'];
-
         function config($routeProvider, $locationProvider) {
 
             $locationProvider.html5Mode(true).hashPrefix('!');
@@ -20,10 +19,19 @@
             })
 
             .when('/login', {
+                controller: 'LoginController',
+                controllerAs: 'vm',
                 templateUrl: 'static/templates/login.html',
             })
 
+            .when('/logout', {
+                controller: 'LogoutController',
+                template: '',
+            })
+
             .when('/register', {
+                controller: 'RegisterController',
+                controllerAs: 'vm',
                 templateUrl: 'static/templates/register.html',
             })
 

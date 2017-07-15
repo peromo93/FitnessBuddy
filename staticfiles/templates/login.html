@@ -3,19 +3,22 @@
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">Login</h4><hr>
-                <form role="form" ng-submit="vm.login()">
+                <div ng-repeat="errorArr in vm.errors">
+                    <p class="alert alert-danger" ng-repeat="error in errorArr">{{error}}</p>
+                </div>
+                <form role="form" name="loginForm" ng-submit="vm.login()">
                     <div class="form-group">
-                        <label for="register__username">Username</label>
-                        <input type="text" class="form-control" id="register__username" ng-model="vm.username">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" name="username" id="username" ng-model="vm.username" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="register__password">Password</label>
-                        <input type="password" class="form-control" id="register__password" ng-model="vm.password">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" ng-model="vm.password" required>
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="submit" class="btn btn-primary" ng-class="{disabled: loginForm.$invalid}">Login</button>
                     </div>
                 </form>
             </div>

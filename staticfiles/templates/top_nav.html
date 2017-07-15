@@ -1,0 +1,11 @@
+<li class="nav-item dropdown">
+    <a class="nav-link text-muted dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
+        <strong>Hello, {{ user }}!</strong>
+    </a>
+    <div class="dropdown-menu animated flipInX">
+        <a ng-if="isAuthenticated"  class="pl-3 dropdown-item" href="settings"><i class="pr-2 icon-cog"></i>Settings</a>
+        <a ng-if="isAuthenticated"  class="pl-3 dropdown-item" href="logout"><i class="pr-2 icon-off"></i>Logout</a>
+        <a ng-if="!isAuthenticated" class="pl-3 dropdown-item" href="login"><i class="pr-2 icon-unlock"></i>Login</a>
+        <a ng-if="!isAuthenticated" class="pl-3 dropdown-item" href="register"><i class="pr-2 icon-user"></i>Register</a>
+    </div>
+</li>

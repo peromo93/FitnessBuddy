@@ -3,26 +3,33 @@
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">Register</h4><hr>
-                <form role="form" ng-submit="vm.register()">
+                <form role="form" name="registerForm" ng-submit="vm.register()">
                     <div class="form-group">
-                        <label for="register__username">Username</label>
-                        <input type="text" class="form-control" id="register__username" ng-model="vm.username">
+                        <label for="username">Username</label>
+                        <div ng-repeat="error in vm.errors.username">
+                            <p class="alert alert-danger">{{error}}</p>
+                        </div>
+                        <input type="text" class="form-control" name="username" id="username" ng-model="vm.username" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="register__password">Password</label>
-                        <input type="password" class="form-control" id="register__password" ng-model="vm.password">
+                        <label for="password1">Password</label>
+                        <div ng-repeat="error in vm.errors.password">
+                            <p class="alert alert-danger">{{error}}</p>
+                        </div>
+                        <input type="password" class="form-control" name="password1" id="password1" ng-model="vm.password1" required>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-danger': registerForm.password2.$invalid && registerForm.password2.$dirty, 'has-success': registerForm.password2.$valid && registerForm.password2.$dirty}">
+                        <label for="password2">Confirm Password</label>
+                        <input type="password" class="form-control form-control-danger form-control-success" name="password2" id="password2" ng-model="vm.password2" required pw-match="password1">
                     </div>
 
                     <div class="form-group">
-                        <label for="register__confirm">Confirm Password</label>
-                        <input type="password" class="form-control" id="register__confirm" ng-model="vm.password">
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" ng-class="{disabled: registerForm.$invalid}">Submit</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
