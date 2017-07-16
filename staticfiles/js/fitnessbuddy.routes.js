@@ -43,6 +43,13 @@
                 requiresLogin: true,
             })
 
+            .when('/settings', {
+                controller: 'SettingsController',
+                controllerAs: 'vm',
+                templateUrl: 'static/templates/settings.html',
+                requiresLogin: true,
+            })
+
             .when('/search', {
                 templateUrl: 'static/templates/search.html',
             });

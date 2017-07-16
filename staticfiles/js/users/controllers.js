@@ -8,6 +8,7 @@
         .controller('RegisterController', RegisterController)
         .controller('LoginController', LoginController)
         .controller('ProfileController', ProfileController)
+        .controller('SettingsController', SettingsController)
         .controller('LogoutController', LogoutController);
 
     /* Registration controller */
@@ -90,6 +91,33 @@
                     }
                 );
         }
+    }
+
+    /* Update settings controller */
+    SettingsController.$inject = ['$rootScope', 'Users'];
+    function SettingsController($rootScope, Users) {
+        var vm = this;
+        vm.username = $rootScope.user;
+
+        vm.updateSettings = function() {
+            Users.updateSettings(vm.username, vm.password1)
+                .then(
+                    function(response, status, headers, config) { // success
+                        Users.login(vm.username, vm.password1)
+                            .then(
+                                function(response, status, headers, config) { // success
+                                    vm.errors = Users.tokenAuthentication(response.data.token);
+                                },
+                                function(response, status, headers, config) { // error
+                                    vm.errors = response.data;
+                                }
+                            );
+                    },
+                    function(response, status, headers, config) { // error
+                        vm.errors = response.data;
+                    }
+                );
+        };
     }
 
     /* Logout controller */

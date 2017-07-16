@@ -27,10 +27,22 @@
             });
         };
 
+        // update the account settings for the currently logged in user
+        this.updateSettings = function(username, password) {
+
+            // POST to registration API endpoint
+            return $http.put('/api/users/myaccount/', {
+                username: username,
+                password: password,
+            });
+        };
+
+        // request profile of the currently logged in user
         this.getProfile = function() {
             return $http.get('/api/users/' + $rootScope.user + '/');
         };
 
+        // update the profile of the currently logged in user
         this.updateProfile = function(calories, fat, carb, protein, is_public) {
             return $http.put('/api/users/' + $rootScope.user + '/', {
                 goal_calories: calories,

@@ -53,6 +53,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         user = self.get_object()
+        user.username = serializer.validated_data.get('username')
         user.set_password(serializer.validated_data.get('password'))
         user.save()
         update_session_auth_hash(self.request, user)
