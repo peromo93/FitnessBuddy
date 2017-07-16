@@ -7,6 +7,7 @@
         ])
         .controller('RegisterController', RegisterController)
         .controller('LoginController', LoginController)
+        .controller('ProfileController', ProfileController)
         .controller('LogoutController', LogoutController);
 
     /* Registration controller */
@@ -57,6 +58,38 @@
                     }
                 );
         };
+    }
+
+    /* Update profile controller */
+    ProfileController.$inject = ['Users'];
+    function ProfileController(Users) {
+        var vm = this;
+
+        Users.getProfile()
+            .then(
+                function(response, status, headers, config) { // success
+                    vm.calories = response.data.goal_calories;
+                    vm.fat = response.data.goal_fat.toFixed(2);
+                    vm.carb = response.data.goal_carbs.toFixed(2);
+                    vm.protein = response.data.goal_protein.toFixed(2);
+                    vm.is_public = response.data.is_public;
+                },
+                function(response, status, headers, config) { // error
+                    console.log('epic fail');
+                }
+            );
+
+        vm.updateProfile = function() {
+            Users.updateProfile(vm.calories, vm.fat, vm.carb, vm.protein, vm.is_public)
+                .then(
+                    function(response, status, headers, config) { // success
+                        vm.success = 'Profile updated successfully!';
+                    },
+                    function(response, status, headers, config) { // error
+                        vm.errors = response.data;
+                    }
+                );
+        }
     }
 
     /* Logout controller */

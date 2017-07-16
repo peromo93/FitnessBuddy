@@ -36,6 +36,13 @@
                 templateUrl: 'static/templates/register.html',
             })
 
+            .when('/profile', {
+                controller: 'ProfileController',
+                controllerAs: 'vm',
+                templateUrl: 'static/templates/profile.html',
+                requiresLogin: true,
+            })
+
             .when('/search', {
                 templateUrl: 'static/templates/search.html',
             });

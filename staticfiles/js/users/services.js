@@ -27,6 +27,20 @@
             });
         };
 
+        this.getProfile = function() {
+            return $http.get('/api/users/' + $rootScope.user + '/');
+        };
+
+        this.updateProfile = function(calories, fat, carb, protein, is_public) {
+            return $http.put('/api/users/' + $rootScope.user + '/', {
+                goal_calories: calories,
+                goal_fat: fat,
+                goal_carbs: carb,
+                goal_protein: protein,
+                is_public: is_public,
+            });
+        };
+
         // unauthenticate the user and clear any token and username
         // redirect to home page
         this.logout = function() {
