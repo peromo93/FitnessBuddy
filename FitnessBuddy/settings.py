@@ -12,7 +12,26 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import datetime
-from secrets import SECRET_KEY, NDB_API_KEY
+from django.utils.crypto import get_random_string
+
+# Import secret key if it exists, or create a new one in secrets.py
+try:
+    from secrets import SECRET_KEY
+except ImportError:
+    print 'Creating a new secret key.'
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+    global SECRET_KEY
+    SECRET_KEY = get_random_string(50, chars)
+    with open(os.path.join(os.path.dirname(__file__), 'secrets.py'), 'w') as fd:
+        fd.write("SECRET_KEY = \'%s\'" % SECRET_KEY)
+
+# Import USDA NDB API key if it exists, or use demo key
+try:
+    from secrets import NDB_API_KEY
+except ImportError:
+    print 'Using USDA NDB Demo API key.'
+    global NDB_API_KEY
+    NDB_API_KEY = 'DEMO_KEY'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -2,7 +2,7 @@ import md5
 import json
 import datetime
 import requests
-from FitnessBuddy.secrets import NDB_API_KEY
+from django.conf import settings
 from users.models import Profile
 from django.shortcuts import get_object_or_404
 from django.http import Http404
@@ -86,7 +86,7 @@ def get_food_report(ndbno):
     else:  # cache miss
         r = requests.get('https://api.nal.usda.gov/ndb/reports',
                          {'ndbno': ndbno, 'type': 'b',
-                          'format': 'json', 'api_key': NDB_API_KEY})
+                          'format': 'json', 'api_key': settings.NDB_API_KEY})
         if r.status_code == requests.codes.ok:
             food_report = json.loads(r.text).get('report').get('food')
 
@@ -126,7 +126,7 @@ def get_search_results(search_terms, data_source, page, max_items):
         r = requests.get('https://api.nal.usda.gov/ndb/search',
                          {'q': search_terms, 'ds': data_source,
                           'max': max_items, 'offset': (int(page)*max_items),
-                          'format': 'json', 'api_key': NDB_API_KEY})
+                          'format': 'json', 'api_key': settings.NDB_API_KEY})
         if r.status_code == requests.codes.ok:
             search_results = json.loads(r.text).get('list')
             cache.set(key, search_results)
