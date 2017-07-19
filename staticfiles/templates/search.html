@@ -3,31 +3,48 @@
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title">Food Search</h4><hr>
-                <form role="form" ng-submit="vm.search()">
+                <div ng-repeat="error in vm.errors">
+                    <p class="alert alert-danger">{{error}}</p>
+                </div>
+                <form role="form" name="searchForm" ng-submit="vm.performSearch()">
                     <div class="form-group">
-                        <label for="register__foodname">Food Name</label>
-                        <input type="text" class="form-control" id="register__username" ng-model="vm.username">
+                        <label for="foodName">Food Name</label>
+                        <input type="text" class="form-control" id="foodName" name="foodName" ng-model="vm.foodName" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="register__datasource">Search Type</label><br>
-                        <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-secondary btn-sm active">
-                                <input type="radio" name="options" id="option1" checked> Both
-                            </label>
-                            <label class="btn btn-secondary btn-sm">
-                                <input type="radio" name="options" id="option2" autocomplete="off"> Generic Foods
-                            </label>
-                            <label class="btn btn-secondary btn-sm">
-                                <input type="radio" name="options" id="option3" autocomplete="off"> Branded Foods
-                            </label>
+                    <div class="container">
+                        <div class="form-group row">
+                            <label for="dataSource" class="col-form-label mr-auto">Search Type</label>
+                            <div class="btn-group mt-1" data-toggle="buttons">
+
+                                <!-- Use ng-click to set vm.dataSource since radios don't seem to work with Bootstrap button toggle -->
+                                <label class="btn btn-primary btn-sm active" ng-init="vm.dataSource = 'standard'" ng-click="vm.dataSource = 'standard'">
+                                    <input type="radio">Generic Foods
+                                </label>
+                                <label class="btn btn-primary btn-sm" ng-click="vm.dataSource = 'branded'">
+                                    <input type="radio">Branded Foods
+                                </label>
+                                <label class="btn btn-primary btn-sm" ng-click="vm.dataSource = 'both'">
+                                    <input type="radio">Both
+                                </label>
+
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Search</button>
+                        <button type="submit" class="btn btn-primary" ng-class="{disabled: searchForm.$invalid}">Search</button>
                     </div>
                 </form>
+            </div>
+        </div>
+        <br>
+        <div ng-if="vm.searchResults" class="card">
+            <div class="card-block">
+                <h4 class="card-title">Search Results</h4><hr>
+                <div ng-repeat="result in vm.searchResults" class="list-group">
+                    <a href="#" ng-click="vm.foodDetail(result.ndbno)" class="list-group-item">{{result.name}}</a>
+                </div>
             </div>
         </div>
     </div>

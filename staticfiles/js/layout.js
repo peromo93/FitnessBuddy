@@ -38,7 +38,6 @@ $('document').ready(function() {
             windowExpanded = true;
         }
         else if( windowExpanded ) {
-            console.log('here');
             $('#sidebar').removeClass('sidebar-toggled');
             windowExpanded = false;
         }

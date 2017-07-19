@@ -10,9 +10,9 @@
     /* Users service */
     Users.$inject = ['$http', '$rootScope', '$location', 'jwtHelper', 'authManager'];
     function Users($http, $rootScope, $location, jwtHelper, authManager) {
-        this.register = function(username, password) {
 
-            // POST to registration API endpoint
+        // POST to registration API endpoint
+        this.register = function(username, password) {
             return $http.post('/api/users/create/', {
                 username: username,
                 password: password,
@@ -25,6 +25,11 @@
                 username: username,
                 password: password,
             });
+        };
+
+        // POST to token renewal API endpoint
+        this.renewToken = function(username, password) {
+            return $http.post('/api/users/token-auth-renew/');
         };
 
         // update the account settings for the currently logged in user
@@ -63,16 +68,16 @@
             $location.url('/');
         };
 
-        // verify that a token is valid and redirect to dashboard
+        // verify that a token is valid and redirect to given url
         // use localStorage to store token and username
-        this.tokenAuthentication = function(tokenString) {
+        this.tokenAuthentication = function(tokenString, redirect = false) {
             try {
                 var token = jwtHelper.decodeToken(tokenString);
                 localStorage.setItem('token', tokenString);
                 localStorage.setItem('username', token.username);
                 $rootScope.user = token.username;
                 authManager.authenticate();
-                $location.url('/dashboard');
+                if(redirect) { $location.url(redirect); }
             }
             catch (e) { // this shouldn't happen - clear any token and username
                 localStorage.removeItem('token');

@@ -26,7 +26,7 @@
                         Users.login(vm.username, vm.password1)
                             .then(
                                 function(response, status, headers, config) { // success
-                                    vm.errors = Users.tokenAuthentication(response.data.token);
+                                    vm.errors = Users.tokenAuthentication(response.data.token, 'dashboard');
                                 },
                                 function(response, status, headers, config) { // error
                                     vm.errors = response.data;
@@ -52,7 +52,7 @@
             Users.login(vm.username, vm.password)
                 .then(
                     function(response, status, headers, config) { // success
-                        vm.errors = Users.tokenAuthentication(response.data.token);
+                        vm.errors = Users.tokenAuthentication(response.data.token, 'dashboard');
                     },
                     function(response, status, headers, config) { // error
                         vm.errors = response.data;

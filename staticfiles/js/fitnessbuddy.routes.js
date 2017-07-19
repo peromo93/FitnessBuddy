@@ -51,6 +51,8 @@
             })
 
             .when('/search', {
+                controller: 'ListController',
+                controllerAs: 'vm',
                 templateUrl: 'static/templates/search.html',
             });
 

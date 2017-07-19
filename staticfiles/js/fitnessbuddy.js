@@ -6,6 +6,7 @@
             'fitnessbuddy.routes',
             'fitnessbuddy.controllers',
             'fitnessbuddy.users',
+            'fitnessbuddy.foodsearch',
             'angular-jwt',
         ])
         .config(config)
