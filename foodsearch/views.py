@@ -5,7 +5,7 @@ from FitnessBuddy.helper import get_food_report, get_search_results
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from foodsearch.serializers import FoodSearchQuerySerializer, FoodSerializer
+from foodsearch.serializers import FoodSearchQuerySerializer, FoodTransformSerializer
 
 
 # Create your views here.
@@ -72,7 +72,7 @@ class FoodDetail(APIView):
         food_report = get_food_report(ndbno)
 
         if food_report:
-            food_serializer = FoodSerializer(food_report)
+            food_serializer = FoodTransformSerializer(food_report)
             return Response(food_serializer.data)
 
         return Response(

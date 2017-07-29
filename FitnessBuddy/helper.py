@@ -88,13 +88,42 @@ def get_food_report(ndbno):
                          {'ndbno': ndbno, 'type': 'b',
                           'format': 'json', 'api_key': settings.NDB_API_KEY})
         if r.status_code == requests.codes.ok:
-            food_report = json.loads(r.text).get('report').get('food')
+            response = json.loads(r.text).get('report').get('food')
 
             # include only nutrients that are in the id list above
-            food_report['nutrients'] = [nutrient for nutrient
-                                        in food_report.get('nutrients')
-                                        if nutrient.get('nutrient_id')
-                                        in nutrient_id_list]
+            response['nutrients'] = [nutrient for nutrient
+                                     in response.get('nutrients')
+                                     if nutrient.get('nutrient_id')
+                                     in nutrient_id_list]
+
+            # transform data to be consistent with FoodTransformSerializer
+            measures = {}
+            for nutrient in response.get('nutrients'):
+                nutrient_id = nutrient.get('nutrient_id')
+                for measure in nutrient.get('measures'):
+                    if not measure:  # in case null ends up in measures list
+                        continue
+                    measure_label = measure.get('label')
+                    measures.setdefault(measure_label, {'measure': measure_label})
+                    measures[measure_label][nutrient_lookup[nutrient_id]] = measure.get('value')
+
+            # if calories were not given by API call calculate them manually
+            for measure_label, measure in measures.iteritems():
+                if not measure.get('calories'):
+                    calories = 0
+                    if measure.get('tfa'):
+                        calories += 9 * float(measure.get('tfa'))
+                    if measure.get('carb'):
+                        calories += 4 * float(measure.get('carb'))
+                    if measure.get('protein'):
+                        calories += 4 * float(measure.get('protein'))
+                    measure['calories'] = calories
+
+            food_report = {
+                'name': response.get('name'),
+                'ndbno': response.get('ndbno'),
+                'measures': measures.values()
+            }
 
             cache.set(key, food_report)
             return food_report
