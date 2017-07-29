@@ -114,6 +114,10 @@
     .form-inline {
         padding-left: 200px;
     }
+
+    .modal {
+        left: 200px !important;
+    }
 }
 
 input.transparent-input {

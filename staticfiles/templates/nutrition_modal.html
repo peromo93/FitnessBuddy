@@ -1,0 +1,71 @@
+<div class="modal fade" id="nutrition-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{vm.foodReport.name}}</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead class="thead-default">
+                        <tr>
+                            <th colspan="2">Nutrition Information</th>
+                        </tr>
+                        <tr>
+                            <th class="pt-0" colspan="2">
+                                <form class="form-inline pl-0">
+                                    <input type="number" class="form-control col-2" min="0" ng-model="vm.foodQty" value="{{vm.foodQty}}">
+                                    <select class="form-control" ng-model="vm.measureIndex">
+                                        <option value="{{$index}}" ng-repeat="measure in vm.foodReport.measures">{{measure.measure}}</option>
+                                    </select>
+                                </form>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">Calories {{vm.foodReport.measures[vm.measureIndex].calories * vm.foodQty | number:0}}</td>
+                        </tr>
+                        <tr ng-if="vm.foodReport.measures[vm.measureIndex].tfa">
+                            <td colspan="2">Calories from fat {{vm.foodReport.measures[vm.measureIndex].tfa *  vm.foodQty * 9 | number:0}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-right">% Daily Value</td>
+                        </tr>
+                        <tr ng-if="vm.foodReport.measures[vm.measureIndex].tfa">
+                            <td><span><strong>Total Fat</strong> {{vm.foodReport.measures[vm.measureIndex].tfa * vm.foodQty | number:1}}g</span></td>
+                            <td class="text-right">{{vm.foodReport.measures[vm.measureIndex].tfa * vm.foodQty / 60 * 100 | number:0}}%</td>
+                        </tr>
+                        <tr ng-if="vm.foodReport.measures[vm.measureIndex].sfa">
+                            <td><span class="pl-3">Saturated Fat {{vm.foodReport.measures[vm.measureIndex].sfa * vm.foodQty | number:1}}g</span></td>
+                            <td class="text-right">{{vm.foodReport.measures[vm.measureIndex].sfa * vm.foodQty / 20 * 100 | number:0}}%</td>
+                        </tr>
+                        <tr ng-if="vm.foodReport.measures[vm.measureIndex].pufa">
+                            <td colspan="2"><span class="pl-3">Polyunsaturated Fat {{vm.foodReport.measures[vm.measureIndex].pufa * vm.foodQty | number:1}}g</span></td>
+                        </tr>
+                        <tr ng-if="vm.foodReport.measures[vm.measureIndex].mufa">
+                            <td colspan="2"><span class="pl-3">Monounsaturated Fat {{vm.foodReport.measures[vm.measureIndex].mufa * vm.foodQty | number:1}}g</span></td>
+                        </tr>
+                        <tr ng-if="vm.foodReport.measures[vm.measureIndex].carb">
+                            <td><span><strong>Total Carbs</strong> {{vm.foodReport.measures[vm.measureIndex].carb * vm.foodQty | number:1}}g</span></td>
+                            <td class="text-right">{{vm.foodReport.measures[vm.measureIndex].carb * vm.foodQty / 300 * 100 | number:0}}%</td>
+                        </tr>
+                        <tr ng-if="vm.foodReport.measures[vm.measureIndex].fiber">
+                            <td><span class="pl-3">Dietary Fiber {{vm.foodReport.measures[vm.measureIndex].fiber * vm.foodQty | number:1}}g</span></td>
+                            <td class="text-right">{{vm.foodReport.measures[vm.measureIndex].fiber * vm.foodQty / 25 * 100 | number:0}}%</td>
+                        </tr>
+                        <tr ng-if="vm.foodReport.measures[vm.measureIndex].sugar">
+                            <td colspan="2"><span class="pl-3">Sugars {{vm.foodReport.measures[vm.measureIndex].sugar * vm.foodQty | number:1}}g</span></td>
+                        </tr>
+                        <tr ng-if="vm.foodReport.measures[vm.measureIndex].protein">
+                            <td><span><strong>Protein</strong> {{vm.foodReport.measures[vm.measureIndex].protein * vm.foodQty | number:1}}g</span></td>
+                            <td class="text-right">{{vm.foodReport.measures[vm.measureIndex].protein * vm.foodQty / 50 * 100 | number:0}}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

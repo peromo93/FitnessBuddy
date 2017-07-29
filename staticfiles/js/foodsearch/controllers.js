@@ -28,6 +28,10 @@
             FoodSearch.getDetail(ndbno)
                 .then(
                     function(response, status, headers, config) { // success
+                        vm.foodQty = 1;
+                        vm.measureIndex = '0';
+                        vm.foodReport = response.data;
+                        $('#nutrition-modal').modal('show');
                         console.log(response.data);
                     },
                     function(response, status, headers, config) { // error
